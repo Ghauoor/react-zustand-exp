@@ -6,10 +6,11 @@ import {
   Paper,
   Typography,
 } from "@mui/material";
-import useHabitStore, { Habit } from "../store/store";
+import useHabitStore from "../store/store";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useCallback } from "react";
+import { Habit } from "../store/types";
 
 const HabitList = () => {
   const { habits, removeHabit, toggleHabit } = useHabitStore();

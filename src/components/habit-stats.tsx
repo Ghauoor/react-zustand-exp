@@ -1,6 +1,7 @@
 import React from "react";
 import { Paper, Typography, Box, LinearProgress } from "@mui/material";
-import useHabitStore, { Habit } from "../store/store";
+import useHabitStore from "../store/store";
+import { Habit } from "../store/types";
 
 const HabitStats: React.FC = () => {
   const { habits, isLoading, error } = useHabitStore();
