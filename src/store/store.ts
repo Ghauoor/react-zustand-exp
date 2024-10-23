@@ -123,8 +123,11 @@ const useHabitStore = create<HabbitState>()(
               await new Promise((resolve) => setTimeout(resolve, 1000));
 
               set({ habits: mockHabits, isLoading: false });
-            } catch (error) {
-              set({ isLoading: false, error: "Error in fetching habits" });
+            } catch (error: unknown) {
+              set({
+                isLoading: false,
+                error: "Error in fetching habits" + error,
+              });
             }
           },
         };
