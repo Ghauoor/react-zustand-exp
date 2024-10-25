@@ -1,4 +1,3 @@
-// store.ts
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { habitActions } from "./actions";
