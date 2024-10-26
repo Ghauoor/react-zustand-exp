@@ -20,3 +20,12 @@ export interface HabitState {
   toggleHabit: (id: string, date: string) => void;
   fetchHabits: () => Promise<void>;
 }
+
+export interface CountState {
+  count: number;
+  inc: () => void;
+  dec: () => void;
+  reset: () => void;
+}
+
+export interface RootState extends HabitState, CountState {}

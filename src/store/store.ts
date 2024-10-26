@@ -1,10 +1,17 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { habitActions } from "./actions";
-import { HabitState } from "./types";
+import { countActions } from "./countActions";
 
-const useHabitStore = create<HabitState>()(
-  devtools(persist(habitActions, { name: "habits" }))
+import { RootState } from "./types";
+import { habitActions } from "./actions";
+
+const useStore = create<RootState>()(
+  devtools((...args) => ({
+    ...persist(habitActions, { name: "habits" })(...args),
+    ...countActions(...args),
+    isLoading: false,
+    error: null,
+  }))
 );
 
-export default useHabitStore;
+export default useStore;

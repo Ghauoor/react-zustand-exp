@@ -14,18 +14,19 @@ const AddHabitForm = () => {
   const [name, setName] = useState("");
   const [frequency, setFrequency] = useState<"daily" | "weekly">("daily");
 
-  const { addHabit } = useHabitStore();
+  const addHabit = useHabitStore((state) => state.addHabit);
 
-  const HandleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (name.trim()) {
       addHabit(name, frequency);
       setName("");
+      setFrequency("daily");
     }
   };
 
   return (
-    <form onSubmit={HandleSubmit}>
+    <form onSubmit={handleSubmit}>
       <Box
         sx={{
           display: "flex",
@@ -39,16 +40,17 @@ const AddHabitForm = () => {
           onChange={(e) => setName(e.target.value)}
           placeholder="Enter habit name"
           fullWidth
+          required
         />
-        <FormControl fullWidth>
+        <FormControl fullWidth required>
           <InputLabel>Frequency</InputLabel>
           <Select
             value={frequency}
             label="Frequency"
             onChange={(e) => setFrequency(e.target.value as "daily" | "weekly")}
           >
-            <MenuItem value="Daily">Daily</MenuItem>
-            <MenuItem value="Weekly">Weekly</MenuItem>
+            <MenuItem value="daily">Daily</MenuItem>
+            <MenuItem value="weekly">Weekly</MenuItem>
           </Select>
         </FormControl>
         <Button variant="contained" type="submit" color="primary">

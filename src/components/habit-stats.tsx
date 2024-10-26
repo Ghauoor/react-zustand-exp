@@ -1,20 +1,22 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Paper, Typography, Box, LinearProgress } from "@mui/material";
 import useHabitStore from "../store/store";
 import { Habit } from "../store/types";
 
 const HabitStats: React.FC = () => {
-  const { habits, isLoading, error } = useHabitStore();
+  const habits = useHabitStore((state) => state.habits);
+  const isLoading = useHabitStore((state) => state.isLoading);
+  const error = useHabitStore((state) => state.error);
 
-  const getTotalHabits = () => habits.length;
+  const totalHabits = useMemo(() => habits.length, [habits]);
 
-  const getCompletedToday = () => {
+  const completedToday = useMemo(() => {
     const today = new Date().toISOString().split("T")[0];
     return habits.filter((habit) => habit.completedDates.includes(today))
       .length;
-  };
+  }, [habits]);
 
-  const getLongestStreak = () => {
+  const longestStreak = useMemo(() => {
     const getStreak = (habit: Habit) => {
       let streak = 0;
       const currentDate = new Date();
@@ -28,12 +30,10 @@ const HabitStats: React.FC = () => {
           break;
         }
       }
-
       return streak;
     };
-
     return Math.max(...habits.map(getStreak), 0);
-  };
+  }, [habits]);
 
   if (isLoading) {
     return <LinearProgress />;
@@ -49,14 +49,12 @@ const HabitStats: React.FC = () => {
         Habit Statistics
       </Typography>
       <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <Typography variant="body1">Total Habits: {totalHabits}</Typography>
         <Typography variant="body1">
-          Total Habits: {getTotalHabits()}
+          Completed Today: {completedToday}
         </Typography>
         <Typography variant="body1">
-          Completed Today: {getCompletedToday()}
-        </Typography>
-        <Typography variant="body1">
-          Longest Streak: {getLongestStreak()} days
+          Longest Streak: {longestStreak} days
         </Typography>
       </Box>
     </Paper>

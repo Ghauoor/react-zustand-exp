@@ -13,7 +13,10 @@ import { useCallback } from "react";
 import { Habit } from "../store/types";
 
 const HabitList = () => {
-  const { habits, removeHabit, toggleHabit } = useHabitStore();
+  const habits = useHabitStore((state) => state.habits);
+  const removeHabit = useHabitStore((state) => state.removeHabit);
+  const toggleHabit = useHabitStore((state) => state.toggleHabit);
+
   const today = new Date().toISOString().split("T")[0];
 
   const getStreak = useCallback((habit: Habit) => {

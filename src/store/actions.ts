@@ -69,8 +69,9 @@ export const habitActions: StateCreator<HabitState> = (set, get) => ({
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       set({ habits: mockHabits, isLoading: false });
-    } catch (error) {
+    } catch (error: unknown) {
       set({ error: "Error fetching habits", isLoading: false });
+      console.log(error);
     }
   },
 });
